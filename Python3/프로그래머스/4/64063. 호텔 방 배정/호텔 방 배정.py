@@ -1,14 +1,22 @@
+import sys
+
+sys.setrecursionlimit(2000)
+
+def find(number, rooms, visiteds):
+    visiteds.append(number)
+    
+    if number not in rooms:
+        return number
+    
+    return find(rooms[number], rooms, visiteds)
+
 def solution(k, room_number):
     rooms = {}
     result = []
     
     for number in room_number:
-        current = number
-        visiteds = [current]
-        
-        while current in rooms:
-            current = rooms[current]
-            visiteds.append(current)
+        visiteds = []
+        current = find(number, rooms, visiteds)
         
         result.append(current)
         
