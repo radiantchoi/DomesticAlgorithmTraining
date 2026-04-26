@@ -1,13 +1,19 @@
 def solution(money):
-    first = money[:len(money) - 1]
-    first[1] = max(first[0], first[1])
+    first_money = money[:-1]
+    second_money = money[1:]
     
-    for i in range(2, len(first)):
-        first[i] = max(first[i - 2] + money[i], first[i - 1])
+    def house_robber(homes) -> int:
+        if len(homes) < 3:
+            return max(homes)
+        
+        homes[1] = max(homes[0], homes[1])
+        
+        for i in range(2, len(homes)):
+            homes[i] = max(homes[i - 2] + homes[i], homes[i - 1])
+        
+        return homes[-1]
     
-    second = money[1:]
-    second[1] = max(second[0], second[1])
-    for j in range(2, len(second)):
-        second[j] = max(second[j - 2] + money[j + 1], second[j - 1])
+    first_candidate = house_robber(first_money)
+    second_candidate = house_robber(second_money)
     
-    return max(first[-1], second[-1])
+    return max(first_candidate, second_candidate)
